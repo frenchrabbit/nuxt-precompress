@@ -1,7 +1,7 @@
 {
-  "name": "nuxt-static-gzip",
-  "version": "0.1.5",
-  "description": "A module for Nuxt.js",
+  "name": "nuxt-precompress",
+  "version": "0.3.6",
+  "description": "Precompress files to gzip and brotli and serve them automatically",
   "author": {
     "name": "frenchrabbit"
   },
@@ -15,6 +15,7 @@
   ],
   "main": "lib/module.js",
   "license": "MIT",
+  "repository": "https://github.com/frenchrabbit/nuxt-precompress",
   "scripts": {
     "dev": "nuxt test/fixture",
     "test": "jest",

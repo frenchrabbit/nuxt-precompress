@@ -1,0 +1,7 @@
+.idea
+test
+.nuxt
+.circleci
+.prettierrc
+.prettierignore
+node_modules
