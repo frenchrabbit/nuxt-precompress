@@ -30,7 +30,7 @@ set options, if needed, this are defaults:
 export default {
   // ...
   modules: ['nuxt-precompress'],
-  // Default options
+  // Default options, override if needed
   nuxtPrecompress: {
     enabled: true, // Enable in production
     report: true, // set false to turn off console messages
@@ -48,22 +48,25 @@ export default {
   
     // build time compression settings
     gzip: {
-      // should compress to gzpi?
+      // should compress to gzip?
       enabled: true,
+      // compression config
+      // https://www.npmjs.com/package/compression-webpack-plugin
       filename: '[path].gz[query]',
       threshold: 10240,
       minRatio: 0.8,
+      compressionOptions: { level: 9 },
       ...userOptions.gzip,
     },
     brotli: {
       // should compress to brotli?
       enabled: true,
+      // compression config
+      // https://www.npmjs.com/package/compression-webpack-plugin
       filename: '[path].br[query]',
-      algorithm: 'brotliCompress',
       compressionOptions: { level: 11 },
       threshold: 10240,
       minRatio: 0.8,
-      ...userOptions.brotli,
     },
   }
   // ...
