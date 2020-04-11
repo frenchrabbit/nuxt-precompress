@@ -12,6 +12,7 @@ jest.setTimeout(10000)
 describe('module E2E test', () => {
   let nuxt
   const catched = []
+  const jsLinks = []
   let brotliHeaders
   // let page
   // let browser
@@ -37,6 +38,7 @@ describe('module E2E test', () => {
       // Assume that at list runtime js should be compressed
       if (res.request().url().endsWith('.js')) {
         catched.push(res.headers())
+        jsLinks.push(res.request().url())
       }
       // console.log(res.request().url())
       // console.log(res.headers())
@@ -54,8 +56,20 @@ describe('module E2E test', () => {
     expect(brotliHeaders).toBeTruthy()
   })
 
-  test('Should have fixed content-type', async () => {
+  test('Should have fixed content-type', () => {
     // TODO: write test
     expect(brotliHeaders['content-type']).toContain('application/javascript')
+  })
+
+  test('Shoud not damage request to page', () => {
+    get('/').then((result) => {
+      expect(result.status).toBe(200)
+    })
+  })
+
+  test('Shoud return answer even with no headers', () => {
+    request(jsLinks[0]).then((result) => {
+      expect(result.status).toBe(200)
+    })
   })
 })
