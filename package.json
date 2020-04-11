@@ -1,6 +1,6 @@
 {
   "name": "nuxt-static-gzip",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "A module for Nuxt.js",
   "author": {
     "name": "frenchrabbit"
@@ -27,7 +27,8 @@
     "jest": "^23.4.1",
     "nuxt": "^2.4.0",
     "prettier": "^2.0.4",
-    "puppeteer": "^1.6.1"
+    "puppeteer": "^1.6.1",
+    "serve-static": "^1.14.1"
   },
   "jest": {
     "testEnvironment": "node",
@@ -37,7 +38,6 @@
   },
   "dependencies": {
     "compression-webpack-plugin": "^3.1.0",
-    "consola": "^2.3.2",
-    "express-static-gzip": "^2.0.6"
+    "consola": "^2.3.2"
   }
 }
