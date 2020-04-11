@@ -1,6 +1,6 @@
 {
   "name": "nuxt-precompress",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Precompress files to gzip and brotli and serve them automatically",
   "author": {
     "name": "frenchrabbit"
@@ -9,6 +9,9 @@
     "vue",
     "nuxt",
     "nuxt.js",
+    "module",
+    "build",
+    "compress",
     "compression",
     "gzip",
     "brotli"
@@ -25,10 +28,10 @@
     "format": "prettier './**/*.{js,ts,json,vue}' --write"
   },
   "devDependencies": {
-    "jest": "^23.4.1",
-    "nuxt": "^2.4.0",
+    "jest": "^25.3.0",
+    "nuxt": "^2.12.2",
     "prettier": "^2.0.4",
-    "puppeteer": "^1.6.1",
+    "puppeteer": "^2.1.1",
     "serve-static": "^1.14.1"
   },
   "jest": {
