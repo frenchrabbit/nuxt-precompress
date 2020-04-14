@@ -6,8 +6,8 @@ Compress files to gzip and brotli at build-time,
 And serve them if browser supports them.
 
 ### Please note:  
-This module uses compression-webpack-plugin for gzip and brotli compress.
-compression-webpack-plugin support brotli based on native nodejs support added in 11.7.0, 
+This module uses [compression-webpack-plugin](https://github.com/webpack-contrib/compression-webpack-plugin) for gzip and brotli.
+compression-webpack-plugin support brotli based on [native nodejs support](https://nodejs.org/api/zlib.html#zlib_zlib_createbrotlicompress_options) added in 11.7.0, 
 so if you use lower nodejs version, this module will make only gzip version for you, 
 but will serve brotli as well if they exist.  
 
@@ -39,20 +39,19 @@ export default {
     middleware: {
       // You can disable middleware if you serve static files using nginx...
       enabled: true,
-      // if try to serv precompress files from static as well
-      // newither webpack or this module will compress it 
+      // Enable if you have .gz or .br files in /static/ folder
       enabledStatic: true, 
-      // Priority of content-encodings, firtst try to serve br, then gzip
-      orderPreference: ['br', 'gzip'],
+      // Priority of content-encodings, first matched with request Accept-Encoding will me served
+      encodingsPriority: ['br', 'gzip'],
     },
-  
+ 
     // build time compression settings
     gzip: {
       // should compress to gzip?
       enabled: true,
       // compression config
       // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].gz[query]',
+      filename: '[path].gz[query]', // middleware will look for this filename
       threshold: 10240,
       minRatio: 0.8,
       compressionOptions: { level: 9 },
@@ -63,7 +62,7 @@ export default {
       enabled: true,
       // compression config
       // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].br[query]',
+      filename: '[path].br[query]', // middleware will look for this filename
       compressionOptions: { level: 11 },
       threshold: 10240,
       minRatio: 0.8,
