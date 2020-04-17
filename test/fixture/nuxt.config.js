@@ -1,6 +1,13 @@
 const resolve = require('path').resolve
 
-const optionConfig = {}
+const optionConfig = {
+  gzip: {
+    threshold: 1,
+  },
+  brotli: {
+    threshold: 1,
+  },
+}
 
 module.exports = {
   rootDir: resolve(__dirname, '../..'),

@@ -40,11 +40,12 @@ describe('module E2E test', () => {
         catched.push(res.headers())
         jsLinks.push(res.request().url())
       }
-      console.log(res.request().url())
+      // console.log(res.request().url())
       // console.log(res.headers())
     })
     await page.goto(url('/'), { waitUntil: 'networkidle0' })
     brotliHeaders = catched.find((el) => el['content-encoding'] === 'br')
+    // console.log(brotliHeaders)
   }, 300000)
 
   afterAll(async () => {
