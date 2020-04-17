@@ -40,7 +40,7 @@ describe('module E2E test', () => {
         catched.push(res.headers())
         jsLinks.push(res.request().url())
       }
-      // console.log(res.request().url())
+      console.log(res.request().url())
       // console.log(res.headers())
     })
     await page.goto(url('/'), { waitUntil: 'networkidle0' })
