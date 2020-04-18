@@ -16,17 +16,11 @@ describe('module E2E test', () => {
   let assets = []
   let brotli = []
   let gzip = []
-  let jsFile
 
   beforeAll(async () => {
     nuxt = new Nuxt(config)
 
-    const createNuxt = async () => {
-      await new Builder(nuxt).build()
-      await nuxt.listen(3000)
-    }
-
-    await createNuxt()
+    await new Builder(nuxt).build()
 
     const files = await fs.promises.readdir(
       resolve(__dirname, '../../.nuxt/dist/client')
@@ -34,6 +28,10 @@ describe('module E2E test', () => {
     assets = files.filter((el) => el.endsWith('.js'))
     brotli = files.filter((el) => el.endsWith('.br'))
     gzip = files.filter((el) => el.endsWith('.gz'))
+
+    nuxt = new Nuxt(config)
+    await nuxt.ready()
+    await nuxt.listen(3000)
   }, 300000)
 
   afterAll(async () => {
@@ -88,12 +86,12 @@ describe('module E2E test', () => {
     expect(res.headers['content-type']).toContain('application/javascript')
   })
 
-  test('Shoud not damage request to page', async () => {
+  test('Should not damage request to page', async () => {
     const res = await get('/')
     expect(res.status).toBe(200)
   })
 
-  test('Shoud return answer even with no headers', async () => {
+  test('Should return answer even with no headers', async () => {
     const res = await get('/_nuxt/' + assets[0])
     expect(res.status).toBe(200)
   })
