@@ -1,21 +1,22 @@
-const puppeteer = require('puppeteer')
-const request = require('request-promise-native')
+const axios = require('axios')
 
 const { Nuxt, Builder } = require('nuxt')
 const config = require('../fixture/nuxt.config')
 
 const url = (path) => `http://localhost:3000${path}`
-const get = (path) => request(url(path))
+const get = (path, config) => axios.get(url(path), config)
+
+const fs = require('fs')
+const resolve = require('path').resolve
 
 jest.setTimeout(10000)
 
 describe('module E2E test', () => {
   let nuxt
-  const catched = []
-  const jsLinks = []
-  let brotliHeaders
-  // let page
-  // let browser
+  let assets = []
+  let brotli = []
+  let gzip = []
+  let jsFile
 
   beforeAll(async () => {
     nuxt = new Nuxt(config)
@@ -25,51 +26,75 @@ describe('module E2E test', () => {
       await nuxt.listen(3000)
     }
 
-    const createBrowser = async () => {
-      browser = await puppeteer.launch({
-        args: ['--no-sandbox'],
-        headless: process.env.NODE_ENV !== 'development',
-        timeout: 0,
-      })
-      page = await browser.newPage()
-    }
-    await Promise.all([createNuxt(), createBrowser()])
-    page.on('response', (res) => {
-      // Assume that at list runtime js should be compressed
-      if (res.request().url().endsWith('.js')) {
-        catched.push(res.headers())
-        jsLinks.push(res.request().url())
-      }
-      // console.log(res.request().url())
-      // console.log(res.headers())
-    })
-    await page.goto(url('/'), { waitUntil: 'networkidle0' })
-    brotliHeaders = catched.find((el) => el['content-encoding'] === 'br')
+    await createNuxt()
+
+    const files = await fs.promises.readdir(
+      resolve(__dirname, '../../.nuxt/dist/client')
+    )
+    assets = files.filter((el) => el.endsWith('.js'))
+    brotli = files.filter((el) => el.endsWith('.br'))
+    gzip = files.filter((el) => el.endsWith('.gz'))
   }, 300000)
 
   afterAll(async () => {
-    await browser.close()
+    // await browser.close()
     await nuxt.close()
   })
 
+  test('Should have at list one gzip file', () => {
+    expect(gzip.length).toBeTruthy()
+  })
+
   test('Should have at list one brotli file', () => {
-    expect(brotliHeaders).toBeTruthy()
+    expect(brotli.length).toBeTruthy()
   })
 
-  test('Should have fixed content-type', () => {
-    // TODO: write test
-    expect(brotliHeaders['content-type']).toContain('application/javascript')
-  })
-
-  test('Shoud not damage request to page', () => {
-    get('/').then((result) => {
-      expect(result.status).toBe(200)
+  test('Should return brotli if accepted', async () => {
+    const res = await get('/_nuxt/' + assets[0], {
+      headers: {
+        'accept-encoding': 'br',
+      },
     })
+    expect(res.headers['content-encoding']).toBe('br')
   })
 
-  test('Shoud return answer even with no headers', () => {
-    request(jsLinks[0]).then((result) => {
-      expect(result.status).toBe(200)
+  // Axios seems to loose content encoding header if it is gzip
+
+  // test('Should return gzip if accepted', async () => {
+  //   const res = await get('/_nuxt/' + assets[0], {
+  //     headers: {
+  //       'accept-encoding': 'gzip',
+  //     },
+  //   })
+  //   console.log(res.headers)
+  //   expect(res.headers['content-encoding']).toBe('gzip')
+  // })
+
+  test('Should return br if accepted gzip, br', async () => {
+    const res = await get('/_nuxt/' + assets[0], {
+      headers: {
+        'accept-encoding': 'gzip, deflate, br',
+      },
     })
+    expect(res.headers['content-encoding']).toBe('br')
+  })
+
+  test('Should have fixed content-type', async () => {
+    const res = await get('/_nuxt/' + assets[0], {
+      headers: {
+        'accept-encoding': 'br',
+      },
+    })
+    expect(res.headers['content-type']).toContain('application/javascript')
+  })
+
+  test('Shoud not damage request to page', async () => {
+    const res = await get('/')
+    expect(res.status).toBe(200)
+  })
+
+  test('Shoud return answer even with no headers', async () => {
+    const res = await get('/_nuxt/' + assets[0])
+    expect(res.status).toBe(200)
   })
 })
