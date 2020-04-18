@@ -14,5 +14,5 @@ module.exports = {
   srcDir: __dirname,
   modules: ['~/../../lib/module'],
   nuxtPrecompress: optionConfig,
-  dev: process.env.NODE_ENV !== 'test' && process.env.NODE_ENV === 'production',
+  dev: false,
 }
