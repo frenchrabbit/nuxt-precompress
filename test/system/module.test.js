@@ -1,13 +1,12 @@
-const axios = require('axios')
+import axios from 'axios'
+import fs from 'fs'
+import { resolve } from 'path'
 
-const { Nuxt, Builder } = require('nuxt')
-const config = require('../fixture/nuxt.config')
+import { Nuxt, Builder } from 'nuxt'
+import config from '../fixture/nuxt.config'
 
 const url = (path) => `http://localhost:3000${path}`
 const get = (path, config) => axios.get(url(path), config)
-
-const fs = require('fs')
-const resolve = require('path').resolve
 
 jest.setTimeout(10000)
 
@@ -19,19 +18,23 @@ describe('module E2E test', () => {
 
   beforeAll(async () => {
     nuxt = new Nuxt(config)
-
-    await new Builder(nuxt).build()
+    const builder = new Builder(nuxt)
+    await builder.build()
+    // // We will need restart nuxt to make sure all build artifacts are done
+    // await nuxt.close()
+    // nuxt = new Nuxt(config)
+    await nuxt.ready()
+    await nuxt.listen(3000)
 
     const files = await fs.promises.readdir(
       resolve(__dirname, '../../.nuxt/dist/client')
     )
+    console.log(files)
     assets = files.filter((el) => el.endsWith('.js'))
     brotli = files.filter((el) => el.endsWith('.br'))
     gzip = files.filter((el) => el.endsWith('.gz'))
 
-    nuxt = new Nuxt(config)
-    await nuxt.ready()
-    await nuxt.listen(3000)
+    // nuxt = new Nuxt(config)
   }, 300000)
 
   afterAll(async () => {
