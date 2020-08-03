@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "axios": "^0.19.2",
-    "jest": "^25.3.0",
+    "jest": "^26.2.2",
     "nuxt": "^2.12.2",
     "prettier": "^2.0.4"
   },
