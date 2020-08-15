@@ -1,13 +1,12 @@
-const axios = require('axios')
+import axios from 'axios'
+import fs from 'fs'
+import { resolve } from 'path'
 
-const { Nuxt, Builder } = require('nuxt')
-const config = require('../fixture/nuxt.config')
+import { Nuxt, Builder } from 'nuxt'
+import config from '../fixture/nuxt.config'
 
 const url = (path) => `http://localhost:3000${path}`
 const get = (path, config) => axios.get(url(path), config)
-
-const fs = require('fs')
-const resolve = require('path').resolve
 
 jest.setTimeout(10000)
 
@@ -19,19 +18,24 @@ describe('module E2E test', () => {
 
   beforeAll(async () => {
     nuxt = new Nuxt(config)
-
     await new Builder(nuxt).build()
+    console.log('Built')
+    await nuxt.close()
+    // We need to restart, otherwise middleware seems to be started before static build.
+    // In our case, we scan assets on server start...
+    nuxt = new Nuxt(config)
+    await nuxt.server.listen(3000, 'localhost')
 
     const files = await fs.promises.readdir(
       resolve(__dirname, '../../.nuxt/dist/client')
     )
+    // console.log(files)
     assets = files.filter((el) => el.endsWith('.js'))
+    console.log(assets)
     brotli = files.filter((el) => el.endsWith('.br'))
     gzip = files.filter((el) => el.endsWith('.gz'))
 
-    nuxt = new Nuxt(config)
-    await nuxt.ready()
-    await nuxt.listen(3000)
+    // nuxt = new Nuxt(config)
   }, 300000)
 
   afterAll(async () => {
@@ -53,6 +57,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'br',
       },
     })
+    // console.log('headers', res.headers)
     expect(res.headers['content-encoding']).toBe('br')
   })
 
@@ -74,6 +79,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'gzip, deflate, br',
       },
     })
+    // console.log('headers', res.headers)
     expect(res.headers['content-encoding']).toBe('br')
   })
 
@@ -83,6 +89,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'br',
       },
     })
+    // console.log('headers', res.headers)
     expect(res.headers['content-type']).toContain('application/javascript')
   })
 
@@ -93,6 +100,7 @@ describe('module E2E test', () => {
 
   test('Should return answer even with no headers', async () => {
     const res = await get('/_nuxt/' + assets[0])
+    // console.log('headers', res.headers)
     expect(res.status).toBe(200)
   })
 })

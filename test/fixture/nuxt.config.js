@@ -12,7 +12,7 @@ const optionConfig = {
 module.exports = {
   rootDir: resolve(__dirname, '../..'),
   srcDir: __dirname,
-  modules: ['~/../../lib/module'],
+  modules: ['~/../../lib/module.js'],
   nuxtPrecompress: optionConfig,
   dev: false,
 }

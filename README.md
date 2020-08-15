@@ -33,7 +33,7 @@ export default {
   // Default options, override if needed
   nuxtPrecompress: {
     enabled: true, // Enable in production
-    report: true, // set false to turn off console messages
+    report: false, // set true to turn one console messages during module init
     test: /\.(js|css|html|txt|xml|svg)$/, // files to compress on build
     // Serving options
     middleware: {
@@ -55,7 +55,6 @@ export default {
       threshold: 10240,
       minRatio: 0.8,
       compressionOptions: { level: 9 },
-      ...userOptions.gzip,
     },
     brotli: {
       // should compress to brotli?
