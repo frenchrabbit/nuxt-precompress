@@ -18,19 +18,22 @@ describe('module E2E test', () => {
 
   beforeAll(async () => {
     nuxt = new Nuxt(config)
-    const builder = new Builder(nuxt)
-    await builder.build()
-    // // We will need restart nuxt to make sure all build artifacts are done
-    // await nuxt.close()
-    // nuxt = new Nuxt(config)
-    await nuxt.ready()
-    await nuxt.listen(3000)
+    await new Builder(nuxt).build()
+    await nuxt.server.listen(3000, 'localhost')
+    // const builder = new Builder(nuxt)
+    // await builder.build()
+    // // // We will need restart nuxt to make sure all build artifacts are done
+    // // await nuxt.close()
+    // // nuxt = new Nuxt(config)
+    // await nuxt.ready()
+    // await nuxt.listen(3000)
 
     const files = await fs.promises.readdir(
       resolve(__dirname, '../../.nuxt/dist/client')
     )
-    console.log(files)
+    // console.log(files)
     assets = files.filter((el) => el.endsWith('.js'))
+    console.log(assets)
     brotli = files.filter((el) => el.endsWith('.br'))
     gzip = files.filter((el) => el.endsWith('.gz'))
 
@@ -56,6 +59,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'br',
       },
     })
+    console.log('headers', res.headers)
     expect(res.headers['content-encoding']).toBe('br')
   })
 
@@ -77,6 +81,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'gzip, deflate, br',
       },
     })
+    console.log('headers', res.headers)
     expect(res.headers['content-encoding']).toBe('br')
   })
 
@@ -86,6 +91,7 @@ describe('module E2E test', () => {
         'accept-encoding': 'br',
       },
     })
+    console.log('headers', res.headers)
     expect(res.headers['content-type']).toContain('application/javascript')
   })
 
@@ -96,6 +102,7 @@ describe('module E2E test', () => {
 
   test('Should return answer even with no headers', async () => {
     const res = await get('/_nuxt/' + assets[0])
+    console.log('headers', res.headers)
     expect(res.status).toBe(200)
   })
 })
