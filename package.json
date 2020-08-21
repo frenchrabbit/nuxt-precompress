@@ -28,7 +28,7 @@
     "format": "prettier './**/*.{js,ts,json,vue}' --write"
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "jest": "^26.4.0",
     "nuxt": "^2.14.1",
     "prettier": "^2.0.4"
