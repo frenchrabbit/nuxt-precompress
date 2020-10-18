@@ -43,7 +43,7 @@
     ]
   },
   "dependencies": {
-    "compression-webpack-plugin": "^4.0.1",
+    "compression-webpack-plugin": "^6.0.3",
     "consola": "^2.3.2"
   }
 }
