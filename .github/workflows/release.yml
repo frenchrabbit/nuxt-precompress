@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 12
       - name: Install dependencies
-        run: yarn
+        run: yarn global add @semantic-release/git @semantic-release/exec conventional-changelog-conventionalcommits && yarn
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
