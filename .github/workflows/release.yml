@@ -22,4 +22,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm install -g @semantic-release/git @semantic-release/exec conventional-changelog-conventionalcommits && npx semantic-release
+        run: npx semantic-release
