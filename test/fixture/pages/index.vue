@@ -1,7 +1,5 @@
 <template>
-  <div>
-    create-nuxt-module default content
-  </div>
+  <div>create-nuxt-module default content</div>
 </template>
 
 <script>

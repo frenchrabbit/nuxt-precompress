@@ -1,9 +1,39 @@
 {
   "name": "nuxt-precompress",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "description": "Precompress files to gzip and brotli and serve them automatically",
+  "repository": "https://github.com/frenchrabbit/nuxt-precompress",
   "author": {
     "name": "frenchrabbit"
+  },
+  "scripts": {
+    "dev": "nuxt test/fixture",
+    "test": "jest",
+    "test:unit": "jest --testRegex \"/test/unit/(.+)\\.test\\.js$\"",
+    "test:system": "jest --testRegex \"/test/system/(.+)\\.test\\.js$\"",
+    "test:coverage": "yarn test --coverage",
+    "format": "prettier './**/*.{js,ts,json,vue}' --write"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "lib/**/*.{js,jsx}"
+    ]
+  },
+  "main": "lib/module.js",
+  "license": "MIT",
+  "devDependencies": {
+    "axios": "^0.21.0",
+    "jest": "^26.4.0",
+    "nuxt": "^2.14.1",
+    "prettier": "^2.0.4"
+  },
+  "peerDependencies": {
+    "serve-static": "^1.14.1"
+  },
+  "dependencies": {
+    "compression-webpack-plugin": "^4.0.1",
+    "consola": "^2.3.2"
   },
   "keywords": [
     "vue",
@@ -15,35 +45,5 @@
     "compression",
     "gzip",
     "brotli"
-  ],
-  "main": "lib/module.js",
-  "license": "MIT",
-  "repository": "https://github.com/frenchrabbit/nuxt-precompress",
-  "scripts": {
-    "dev": "nuxt test/fixture",
-    "test": "jest",
-    "test:unit": "jest --testRegex \"/test/unit/(.+)\\.test\\.js$\"",
-    "test:system": "jest --testRegex \"/test/system/(.+)\\.test\\.js$\"",
-    "test:coverage": "yarn test --coverage",
-    "format": "prettier './**/*.{js,ts,json,vue}' --write"
-  },
-  "devDependencies": {
-    "axios": "^0.21.0",
-    "jest": "^26.4.0",
-    "nuxt": "^2.14.1",
-    "prettier": "^2.0.4"
-  },
-  "peerDependencies": {
-    "serve-static": "^1.14.1"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "collectCoverageFrom": [
-      "lib/**/*.{js,jsx}"
-    ]
-  },
-  "dependencies": {
-    "compression-webpack-plugin": "^4.0.1",
-    "consola": "^2.3.2"
-  }
+  ]
 }
