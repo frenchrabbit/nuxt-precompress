@@ -1,6 +1,6 @@
 {
   "name": "nuxt-precompress",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Precompress files to gzip and brotli and serve them automatically",
   "author": {
     "name": "frenchrabbit"
