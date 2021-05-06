@@ -13,6 +13,7 @@
           { "type": "fix", "release": "patch" },
           { "type": "feat", "release": "minor" },
           { "type": "update", "release": "minor" },
+          { "type": "chore", "release": "patch" },
           { "breaking": true, "release": "major" }
         ]
       }
