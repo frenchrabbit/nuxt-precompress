@@ -1,0 +1,25 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  reviewers:
+  - maddocnc
+  assignees:
+  - maddocnc
+  ignore:
+  - dependency-name: compression-webpack-plugin
+    versions:
+    - ">= 7.1.a, < 7.2"
+  - dependency-name: nuxt
+    versions:
+    - 2.14.12
+    - 2.15.0
+    - 2.15.1
+    - 2.15.2
+  - dependency-name: consola
+    versions:
+    - 2.15.1
+    - 2.15.2
