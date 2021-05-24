@@ -2993,16 +2993,13 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
-compression-webpack-plugin@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-4.0.1.tgz#33eda97f1170dd38c5556771de10f34245aa0274"
-  integrity sha512-0mg6PgwTsUe5LEcUrOu3ob32vraDx2VdbMGAT1PARcOV+UJWDYZFdkSo6RbHoGQ061mmmkC7XpRKOlvwm/gzJQ==
+compression-webpack-plugin@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-8.0.0.tgz#cea047f9e047020cb267a297898d8d05e9aa29a7"
+  integrity sha512-/pBUx1gV8nL6YPKKa9QRs4xoemU28bfqAu8z5hLy2eTrWog4fU8lQYtlpbYwCWtIfAHLxsgSUHjk9RqK6UL+Yw==
   dependencies:
-    cacache "^15.0.5"
-    find-cache-dir "^3.3.1"
-    schema-utils "^2.7.0"
-    serialize-javascript "^4.0.0"
-    webpack-sources "^1.4.3"
+    schema-utils "^3.0.0"
+    serialize-javascript "^5.0.1"
 
 compression@^1.7.4:
   version "1.7.4"
@@ -8184,7 +8181,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.0.0, schema-utils@^2.6.5, schema-utils@^2.7.0, schema-utils@^2.7.1:
+schema-utils@^2.0.0, schema-utils@^2.6.5, schema-utils@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.7.1.tgz#1ca4f32d1b24c590c203b8e7a50bf0ea4cd394d7"
   integrity sha512-SHiNtMOUGWBQJwzISiVYKu82GiV4QYGePp3odlY1tuKO7gPtphAT5R/py0fA6xtbgLL/RvtJZnU9b8s0F1q0Xg==
