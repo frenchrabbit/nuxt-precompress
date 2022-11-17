@@ -28,7 +28,7 @@
     "axios": "^0.21.0",
     "conventional-changelog-conventionalcommits": "^4.5.0",
     "jest": "^26.4.0",
-    "nuxt": "^2.14.1",
+    "nuxt": "^3.0.0",
     "prettier": "^2.0.4"
   },
   "peerDependencies": {
