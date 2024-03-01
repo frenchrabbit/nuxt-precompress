@@ -27,6 +27,8 @@ set options, if needed, this are defaults:
 
 ```javascript
 // nuxt.config.js
+import zlib from 'zlib'
+
 export default {
   // ...
   modules: ['nuxt-precompress'],
@@ -51,18 +53,26 @@ export default {
       enabled: true,
       // compression config
       // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].gz[query]', // middleware will look for this filename
+      filename: '[path][base].gz[query]', // middleware will look for this filename
       threshold: 10240,
       minRatio: 0.8,
-      compressionOptions: { level: 9 },
+      compressionOptions: {
+        params: {
+          level: 9
+        }
+      },
     },
     brotli: {
       // should compress to brotli?
       enabled: true,
       // compression config
       // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].br[query]', // middleware will look for this filename
-      compressionOptions: { level: 11 },
+      filename: '[path][base].br[query]', // middleware will look for this filename
+      compressionOptions: {
+        params: {
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11
+        }
+      },
       threshold: 10240,
       minRatio: 0.8,
     },
