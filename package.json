@@ -14,12 +14,6 @@
     "test:coverage": "yarn test --coverage",
     "format": "prettier './**/*.{js,ts,json,vue}' --write"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "collectCoverageFrom": [
-      "lib/**/*.{js,jsx}"
-    ]
-  },
   "main": "lib/module.js",
   "license": "MIT",
   "devDependencies": {
